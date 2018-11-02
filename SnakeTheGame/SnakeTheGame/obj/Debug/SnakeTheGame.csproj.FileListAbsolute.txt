@@ -1,0 +1,10 @@
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\bin\Debug\SnakeTheGame.exe.config
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\bin\Debug\SnakeTheGame.exe
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\bin\Debug\SnakeTheGame.pdb
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\obj\Debug\SnakeTheGame.csprojResolveAssemblyReference.cache
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\obj\Debug\SnakeTheGame.Form1.resources
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\obj\Debug\SnakeTheGame.Properties.Resources.resources
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\obj\Debug\SnakeTheGame.csproj.GenerateResource.Cache
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\obj\Debug\SnakeTheGame.csproj.CoreCompileInputs.cache
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\obj\Debug\SnakeTheGame.exe
+C:\Users\jcola\source\repos\Snake\SnakeWFA\SnakeTheGame\SnakeTheGame\obj\Debug\SnakeTheGame.pdb
