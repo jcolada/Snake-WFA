@@ -261,8 +261,7 @@ namespace SnakeTheGame
                 highScoreNum = (int)Settings.Score;
                 highScoreValue.Text = highScoreNum.ToString();
             }
-            EnableOptions();
-            
+            EnableOptions();            
         }
 
         private void start_Click(object sender, EventArgs e)
