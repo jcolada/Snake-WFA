@@ -14,6 +14,13 @@ namespace SnakeTheGame
     {
         private List<Circle> Snake = new List<Circle>();
         private Circle food = new Circle();
+        private Brush snakeColor;
+        private bool brdrlsMode = false;
+        private bool insMode = false;
+
+        //every 3 times we eat we will increase speed
+        private int eatCount = 0; 
+        public int highScoreNum = 0;
 
         public Form1()
         {
@@ -24,8 +31,8 @@ namespace SnakeTheGame
             gameTimer.Interval = 100;
             gameTimer.Tick += updateScreen;
             gameTimer.Start();
-
-            startGame();
+            
+            //startGame();
         }
 
         private void updateScreen(object sender, EventArgs e)
@@ -64,6 +71,7 @@ namespace SnakeTheGame
         {
             for(int i = Snake.Count - 1; i >= 0; i--)
             {
+                //movement of the snake's head
                 if (i == 0)
                 {
                     switch (Settings.direction)
@@ -85,13 +93,39 @@ namespace SnakeTheGame
                     int maxXpos = pbCanvas.Size.Width / Settings.Height;
                     int maxYpos = pbCanvas.Size.Height / Settings.Width;
 
-                    if ( //detect if snake reaches border of game, end game if true
+
+                    if (brdrlsMode)
+                    {
+                        //borderless
+                        if (Snake[i].x == -1)
+                        {
+                            Snake[i].x = maxXpos;
+                        }
+                        else if (Snake[i].x == maxXpos + 1)
+                        {
+                            Snake[i].x = -1;
+                        }
+                        else if (Snake[i].y == maxYpos + 1)
+                        {
+                            Snake[i].y = 0;
+                        }
+                        else if (Snake[i].y == 0)
+                        {
+                            Snake[i].y = maxYpos;
+                        }
+                    }
+                    else
+                    {
+                        if ( //detect if snake reaches border of game, end game if true
                         Snake[i].x < 0 || Snake[i].y < 0 ||
                         Snake[i].x > maxXpos || Snake[i].y > maxYpos
-                       )
-                    {
-                        die();
+                        )
+                        {
+                            die();
+                        }
+
                     }
+
 
                     //detect collision with self
                     for (int j = 1; j < Snake.Count; j++)
@@ -108,6 +142,8 @@ namespace SnakeTheGame
                         eat();
                     }
                 }
+
+                //otherwise move body to location of head
                 else
                 {
                     Snake[i].x = Snake[i - 1].x;
@@ -132,19 +168,9 @@ namespace SnakeTheGame
 
             if(Settings.GameOver == false)
             {
-                Brush snakeColor;
 
                 for(int i = 0; i < Snake.Count; i++)
                 {
-                    if (i == 0)
-                    {
-                        snakeColor = Brushes.Black;
-                    }
-                    else
-                    {
-                        snakeColor = Brushes.Green;
-                    }
-
                     //draw snake body and head
                     canvas.FillEllipse(snakeColor,
                         new Rectangle(
@@ -163,7 +189,8 @@ namespace SnakeTheGame
             }
             else
             {
-                string gameOver = "Game Over \n" + "Final Score is " + Settings.Score + "\n Press Enter to Restart \n";
+                //end game text
+                string gameOver = "Game Over \n" + "Final Score is " + Settings.Score + "\n";
                 endText.Text = gameOver;
                 endText.Visible = true;
             }
@@ -174,6 +201,15 @@ namespace SnakeTheGame
             endText.Visible = false;
             new Settings();
             Snake.Clear();
+
+            getSnakeColorChoice();
+            brdrlsMode = borderlessModeIndicator.Checked;
+            insMode = insaneModeIndicator.Checked;
+            if (insMode)
+            {
+                gameTimer.Interval = 10;
+            }
+            DisableOptions();
 
             Circle head = new Circle { x = 10, y = 5 };
             Snake.Add(head);
@@ -202,12 +238,81 @@ namespace SnakeTheGame
             Snake.Add(body);
             Settings.Score += Settings.Points;
             gameScore.Text = Settings.Score.ToString();
+
+            //only increase speed on not insane mode
+            if (!insMode)
+            {
+                if (eatCount == 3)
+                {
+                    eatCount = 0;
+                    gameTimer.Interval -= Settings.Speed;
+                }
+                eatCount++;
+            }        
+
             generateFood();
         }
 
         private void die()
         {
             Settings.GameOver = true;
+            if((int)Settings.Score > highScoreNum)
+            {
+                highScoreNum = (int)Settings.Score;
+                highScoreValue.Text = highScoreNum.ToString();
+            }
+            EnableOptions();
+            
+        }
+
+        private void start_Click(object sender, EventArgs e)
+        {
+            startGame();
+        }
+
+        private void getSnakeColorChoice()
+        {
+            switch(snakeColorChoice.SelectedItem.ToString())
+            {
+                case "Green":
+                    snakeColor = Brushes.Green;
+                    break;
+                case "Red":
+                    snakeColor = Brushes.Red;
+                    break;
+                case "Blue":
+                    snakeColor = Brushes.Blue;
+                    break;
+                case "Yellow":
+                    snakeColor = Brushes.Yellow;
+                    break;
+                case "Purple":
+                    snakeColor = Brushes.Purple;
+                    break;
+                case "Orange":
+                    snakeColor = Brushes.Orange;
+                    break;
+                case "Pink":
+                    snakeColor = Brushes.Pink;
+                    break;
+                case "Aqua":
+                    snakeColor = Brushes.Aqua;
+                    break;
+            }
+        }
+        private void EnableOptions()
+        {
+            snakeColorChoice.Enabled = true;
+            start.Enabled = true;
+            borderlessModeIndicator.Enabled = true;
+            insaneModeIndicator.Enabled = true;
+        }
+        private void DisableOptions()
+        {
+            snakeColorChoice.Enabled = false;
+            start.Enabled = false;
+            borderlessModeIndicator.Enabled = false;
+            insaneModeIndicator.Enabled = false;
         }
     }
 }
